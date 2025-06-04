@@ -26,7 +26,7 @@ Este proyecto consiste en el desarrollo de un **Sistema de Gestión Hospitalaria
 ### 🔌 Requisitos técnicos
 
 * Lenguaje: Python
-* Sistema operativo: Linux (preferido) o Windows
+* Sistema operativo: Linux
 * Whisper:
   * Python 3.9+
   * Dependencias: `openai-whisper`, `ffmpeg`, `torch`
