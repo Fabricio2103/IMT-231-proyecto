@@ -14,10 +14,11 @@ Este proyecto consiste en el desarrollo de un **Sistema de Gestión Hospitalaria
 [Whisper](https://github.com/openai/whisper) es un modelo de reconocimiento automático de voz de código abierto creado por OpenAI. Permite transcribir audio a texto en múltiples idiomas con alta precisión. En este proyecto, se utiliza Whisper para **convertir instrucciones habladas en comandos de texto** que el sistema hospitalario puede interpretar.
 
 ### 🔧 Funcionalidades del sistema
-
-* **Gestión de pacientes**: registro, edición y consulta.
-* **Gestión de médicos**: información y especialidades.
-* **Agendamiento de citas**: con verificación de disponibilidad.
+* **Registro de pacientes**:datos personales, historial médico
+* **Asignación de habitaciones o camas**
+* **Asignación de pacientes a médicos**
+* **Programación de citas médicas**: fecha, hora, médico, paciente
+* **Modificación o cancelación de citas**
 * **Reconocimiento de voz (Whisper)**:
 
   * Registrar pacientes dictando sus datos.
