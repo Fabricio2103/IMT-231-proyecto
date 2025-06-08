@@ -1,0 +1,8 @@
+name: proyecto
+channels:
+  - https://repo.anaconda.com/pkgs/main
+  - https://repo.anaconda.com/pkgs/r
+dependencies:
+  - python=3.12
+  - pyinstaller
+prefix: /home/marcelo767/miniconda3/envs/proyecto
