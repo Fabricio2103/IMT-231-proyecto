@@ -3,7 +3,7 @@ from datetime import datetime
 from transcripcion_audio import transcribir_audio
 # cargar el modelo de lenguaje para español
 nlp = spacy.load("es_core_news_md")
-texto= transcribir_audio(15)
+texto="El paciente Juan Pérez, de 30 años, ingresó a la habitación 205 el 15 de marzo de 2023 a las 10:30 AM. La señora María López, doctora a cargo, revisará su estado el 16 de marzo a las 11:00 AM."
 def extraer_personas(texto):
     # esta funcion saca nombres de personas pero a veces puede fallar si el texto esta muy raro
     doc = nlp(texto)
@@ -75,3 +75,7 @@ def procesar_cita(texto):
         else:
             paciente = p
     return [fecha, hora, paciente, medico]  # orden ajustado
+
+print(procesar_cita(texto))
+print(procesar_registro(texto))
+print(procesar_habitacion(texto))
