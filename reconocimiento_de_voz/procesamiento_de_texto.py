@@ -1,9 +1,9 @@
 import spacy
 from datetime import datetime
-
+from transcripcion_audio import transcribir_audio
 # cargar el modelo de lenguaje para español
 nlp = spacy.load("es_core_news_md")
-
+texto= transcribir_audio(15)
 def extraer_personas(texto):
     # esta funcion saca nombres de personas pero a veces puede fallar si el texto esta muy raro
     doc = nlp(texto)
@@ -34,47 +34,44 @@ def extraer_fechas_horas(texto):
         elif ent.label_ == "TIME" and not hora:
             hora = ent.text
     return fecha, hora
+def inferir_genero(texto):
+    # esta funcion trata de ver si el genero es masculino o femenino segun palabras clave
+    texto_lower = texto.lower()
+    if "la paciente" in texto_lower or "señora" in texto_lower or "doña" in texto_lower:
+        return "Femenino"
+    elif "el paciente" in texto_lower or "señor" in texto_lower or "don" in texto_lower:
+        return "Masculino"
+    else:
+        return "No especificado"
 
 def procesar_registro(texto):
-    # procesa los datos basicos del paciente como nombre edad y documento
+    # procesa el registro del paciente sacando nombre edad y genero pero no documento
     persona = extraer_personas(texto)
     numeros = extraer_numeros(texto)
     edad = numeros[0] if len(numeros) > 0 else None
-    documento = numeros[1] if len(numeros) > 1 else None
-    return [persona, edad, documento]
+    genero = inferir_genero(texto)
+    historial = ""  # se deja vacio para completar luego
+    return [persona, edad, genero, historial]  # orden ajustado
 
 def procesar_habitacion(texto):
-    # saca el numero de la habitacion y el nombre del paciente si se puede
+    # busca numero de habitacion y nombre del paciente para asignar
     persona = extraer_personas(texto)
     numeros = extraer_numeros(texto)
     habitacion = numeros[0] if numeros else None
-    return [habitacion, persona]
+    estado = "Ocupada"
+    return [habitacion, persona, estado]  # orden ajustado
 
 def procesar_cita(texto):
-    # busca quien es el medico y el paciente y cuando es la cita
+    # obtiene fecha hora medico y paciente si hay sino deja vacio
     fecha, hora = extraer_fechas_horas(texto)
     doc = nlp(texto)
     personas = [ent.text for ent in doc.ents if ent.label_ == "PER"]
     medico = None
     paciente = None
     for p in personas:
-        if 'dr.' in p.lower() or 'dra.' in p.lower():
+        p_lower = p.lower()
+        if 'dr.' in p_lower or 'dra.' in p_lower:
             medico = p
         else:
             paciente = p
-    return [fecha, hora, medico, paciente]
-
-def procesar_modificacion(texto):
-    # aqui se revisa si la cita se va cancelar o modificar y quien es el doctor y el paciente
-    accion = "cancelar" if "cancelar" in texto.lower() else "modificar"
-    doc = nlp(texto)
-    personas = [ent.text for ent in doc.ents if ent.label_ == "PER"]
-    medico = None
-    paciente = None
-    for p in personas:
-        if 'dr.' in p.lower() or 'dra.' in p.lower():
-            medico = p
-        else:
-            paciente = p
-    return [accion, medico, paciente]
-
+    return [fecha, hora, paciente, medico]  # orden ajustado
