@@ -14,3 +14,11 @@ def guardar_en_excel(datos, nombre_archivo):
     ws = wb.active
     ws.append(datos)
     wb.save(nombre_archivo)
+
+def leer_excel(nombre_archivo):
+    if not os.path.exists(nombre_archivo):
+        return []
+
+    wb = openpyxl.load_workbook(nombre_archivo)
+    ws = wb.active
+    return [list(row) for row in ws.iter_rows(values_only=True)][1:]
