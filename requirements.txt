@@ -1,7 +1,15 @@
 altgraph @ file:///work/perseverance-python-buildout/croot/altgraph_1698866641409/work
+annotated-types==0.7.0
+blis==1.3.0
+catalogue==2.0.10
 certifi==2025.4.26
 cffi @ file:///home/conda/feedstock_root/build_artifacts/cffi_1725560558132/work
 charset-normalizer==3.4.2
+click==8.2.1
+cloudpathlib==0.21.1
+confection==0.1.5
+cymem==2.0.11
+es_core_news_md @ https://github.com/explosion/spacy-models/releases/download/es_core_news_md-3.8.0/es_core_news_md-3.8.0-py3-none-any.whl#sha256=478b8bb3f3e8eb149192f7d80e7cd64f990b7e9bccbc5329df41a57e86326be2
 evdev==1.9.2
 ffmpeg-python==0.2.0
 filelock==3.18.0
@@ -10,13 +18,19 @@ future==1.0.0
 idna==3.10
 Jinja2==3.1.6
 keyboard==0.13.5
+langcodes==3.5.0
+language_data==1.3.0
 llvmlite==0.44.0
+marisa-trie==1.2.1
+markdown-it-py==3.0.0
 MarkupSafe==3.0.2
+mdurl==0.1.2
 mkl-service==2.4.0
 mkl_fft @ file:///io/mkl313/mkl_fft_1730824109137/work
 mkl_random @ file:///io/mkl313/mkl_random_1730823916628/work
 more-itertools==10.7.0
 mpmath==1.3.0
+murmurhash==1.0.13
 networkx==3.5
 numba==0.61.2
 numpy==2.2.6
@@ -36,25 +50,42 @@ nvidia-nvjitlink-cu12==12.6.85
 nvidia-nvtx-cu12==12.6.77
 openai-whisper==20240930
 packaging @ file:///croot/packaging_1734472117206/work
+preshed==3.0.10
 PyAudio==0.2.14
 pycparser @ file:///home/conda/feedstock_root/build_artifacts/bld/rattler-build_pycparser_1733195786/work
+pydantic==2.11.5
+pydantic_core==2.33.2
 pydub==0.25.1
+Pygments==2.19.1
 pyinstaller @ file:///croot/pyinstaller_1740594215361/work
 pyinstaller-hooks-contrib @ file:///croot/pyinstaller-hooks-contrib_1740582443772/work
 pynput==1.8.1
 python-xlib==0.33
 regex==2024.11.6
 requests==2.32.3
+rich==14.0.0
 scipy @ file:///croot/scipy_1747238027288/work/dist/scipy-1.15.3-cp312-cp312-linux_x86_64.whl#sha256=d08f7dad705164c63152142357d3775e85fa292913cb9b9a8fe7ae5fa6537d6b
 setuptools==78.1.1
+shellingham==1.5.4
 six==1.17.0
+smart-open==7.1.0
 sounddevice @ file:///home/conda/feedstock_root/build_artifacts/python-sounddevice_1748804668549/work
+spacy==3.8.7
+spacy-legacy==3.0.12
+spacy-loggers==1.0.5
+srsly==2.5.1
 sympy==1.14.0
+thinc==8.3.6
 tiktoken==0.9.0
 torch==2.7.0
 tqdm==4.67.1
 triton==3.3.0
+typer==0.16.0
+typing-inspection==0.4.1
 typing_extensions==4.14.0
 urllib3==2.4.0
+wasabi==1.1.3
+weasel==0.4.1
 wheel==0.45.1
 whisper==1.1.10
+wrapt==1.17.2
