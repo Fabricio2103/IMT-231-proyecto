@@ -1,11 +1,10 @@
 import spacy
+import re
 from datetime import datetime
 from transcripcion_audio import transcribir_audio
-# cargar el modelo de lenguaje para español
+
 nlp = spacy.load("es_core_news_md")
-texto="El paciente Juan Pérez, de 30 años, ingresó a la habitación 205 el 15 de marzo de 2023 a las 10:30 AM. La señora María López, doctora a cargo, revisará su estado el 16 de marzo a las 11:00 AM."
 def extraer_personas(texto):
-    # esta funcion saca nombres de personas pero a veces puede fallar si el texto esta muy raro
     doc = nlp(texto)
     persona = None
     for ent in doc.ents:
@@ -15,7 +14,6 @@ def extraer_personas(texto):
     return persona
 
 def extraer_numeros(texto):
-    # esta funcion busca numeros en el texto como edad documento o habitacion pero no sabe que tipo es cada uno
     doc = nlp(texto)
     numeros = []
     for token in doc:
@@ -24,45 +22,39 @@ def extraer_numeros(texto):
     return numeros
 
 def extraer_fechas_horas(texto):
-    # aqui se buscan las fechas y horas si hay sino se retorna None
-    doc = nlp(texto)
-    fecha = None
-    hora = None
-    for ent in doc.ents:
-        if ent.label_ == "DATE" and not fecha:
-            fecha = ent.text
-        elif ent.label_ == "TIME" and not hora:
-            hora = ent.text
+    # Usamos expresiones regulares para mayor precisión en fechas y horas
+    patron_fecha = re.search(r"\d{1,2} de \w+ de \d{4}", texto)
+    patron_hora = re.search(r"\d{1,2}:\d{2} (AM|PM)", texto, re.IGNORECASE)
+    fecha = patron_fecha.group() if patron_fecha else None
+    hora = patron_hora.group() if patron_hora else None
     return fecha, hora
+
 def inferir_genero(texto):
-    # esta funcion trata de ver si el genero es masculino o femenino segun palabras clave
-    texto_lower = texto.lower()
-    if "la paciente" in texto_lower or "señora" in texto_lower or "doña" in texto_lower:
+    texto = texto.lower()
+    if "la paciente" in texto or "doctora" in texto or "señora" in texto or "doña" in texto:
         return "Femenino"
-    elif "el paciente" in texto_lower or "señor" in texto_lower or "don" in texto_lower:
+    elif "el paciente" in texto or "doctor" in texto or "señor" in texto or "don" in texto:
         return "Masculino"
     else:
         return "No especificado"
 
+
 def procesar_registro(texto):
-    # procesa el registro del paciente sacando nombre edad y genero pero no documento
     persona = extraer_personas(texto)
     numeros = extraer_numeros(texto)
     edad = numeros[0] if len(numeros) > 0 else None
     genero = inferir_genero(texto)
-    historial = ""  # se deja vacio para completar luego
-    return [persona, edad, genero, historial]  # orden ajustado
+    historial = ""
+    return [persona, edad, genero, historial]
 
 def procesar_habitacion(texto):
-    # busca numero de habitacion y nombre del paciente para asignar
     persona = extraer_personas(texto)
     numeros = extraer_numeros(texto)
-    habitacion = numeros[0] if numeros else None
+    habitacion = numeros[1] if len(numeros) > 1 else None  # evita confundir con edad
     estado = "Ocupada"
-    return [habitacion, persona, estado]  # orden ajustado
+    return [habitacion, persona, estado]
 
 def procesar_cita(texto):
-    # obtiene fecha hora medico y paciente si hay sino deja vacio
     fecha, hora = extraer_fechas_horas(texto)
     doc = nlp(texto)
     personas = [ent.text for ent in doc.ents if ent.label_ == "PER"]
@@ -70,12 +62,8 @@ def procesar_cita(texto):
     paciente = None
     for p in personas:
         p_lower = p.lower()
-        if 'dr.' in p_lower or 'dra.' in p_lower:
+        if 'dr.' in p_lower or 'dra.' in p_lower or "doctora" in texto.lower() or "doctor" in texto.lower():
             medico = p
         else:
             paciente = p
-    return [fecha, hora, paciente, medico]  # orden ajustado
-
-print(procesar_cita(texto))
-print(procesar_registro(texto))
-print(procesar_habitacion(texto))
+    return [fecha, hora, paciente, medico]
