@@ -1,9 +1,21 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+altgraph
+certifi==2025.4.26
+cffi==1.16.0  # última versión compatible estimada
+=======
+>>>>>>> develop
 altgraph @ file:///work/perseverance-python-buildout/croot/altgraph_1698866641409/work
 annotated-types==0.7.0
 blis==1.3.0
 catalogue==2.0.10
 certifi==2025.4.26
 cffi @ file:///home/conda/feedstock_root/build_artifacts/cffi_1725560558132/work
+<<<<<<< HEAD
+=======
+>>>>>>> eb0d622 (texto de requerimientos del proyecto y entorno virtual)
+>>>>>>> develop
 charset-normalizer==3.4.2
 click==8.2.1
 cloudpathlib==0.21.1
@@ -24,16 +36,40 @@ llvmlite==0.44.0
 marisa-trie==1.2.1
 markdown-it-py==3.0.0
 MarkupSafe==3.0.2
+<<<<<<< HEAD
 mdurl==0.1.2
 mkl-service==2.4.0
 mkl_fft @ file:///io/mkl313/mkl_fft_1730824109137/work
 mkl_random @ file:///io/mkl313/mkl_random_1730823916628/work
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+mkl-service==2.4.2
+mkl_fft==1.3.14
+mkl_random==1.2.10
+=======
+=======
+mdurl==0.1.2
+>>>>>>> b9e1857 (actualizacion)
+mkl-service==2.4.0
+mkl_fft @ file:///io/mkl313/mkl_fft_1730824109137/work
+mkl_random @ file:///io/mkl313/mkl_random_1730823916628/work
+>>>>>>> eb0d622 (texto de requerimientos del proyecto y entorno virtual)
+>>>>>>> develop
 more-itertools==10.7.0
 mpmath==1.3.0
 murmurhash==1.0.13
 networkx==3.5
 numba==0.61.2
+<<<<<<< HEAD
 numpy==2.2.6
+=======
+<<<<<<< HEAD
+numpy==1.26.4
+=======
+numpy==2.2.6
+>>>>>>> eb0d622 (texto de requerimientos del proyecto y entorno virtual)
+>>>>>>> develop
 nvidia-cublas-cu12==12.6.4.1
 nvidia-cuda-cupti-cu12==12.6.80
 nvidia-cuda-nvrtc-cu12==12.6.77
@@ -49,6 +85,17 @@ nvidia-nccl-cu12==2.26.2
 nvidia-nvjitlink-cu12==12.6.85
 nvidia-nvtx-cu12==12.6.77
 openai-whisper==20240930
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+packaging==24.0  # última versión disponible compatible
+PyAudio==0.2.14
+pycparser==2.22
+pydub==0.25.1
+pyinstaller==6.6.0
+pyinstaller-hooks-contrib==2024.6
+=======
+>>>>>>> develop
 packaging @ file:///croot/packaging_1734472117206/work
 preshed==3.0.10
 PyAudio==0.2.14
@@ -59,21 +106,48 @@ pydub==0.25.1
 Pygments==2.19.1
 pyinstaller @ file:///croot/pyinstaller_1740594215361/work
 pyinstaller-hooks-contrib @ file:///croot/pyinstaller-hooks-contrib_1740582443772/work
+<<<<<<< HEAD
+=======
+>>>>>>> eb0d622 (texto de requerimientos del proyecto y entorno virtual)
+>>>>>>> develop
 pynput==1.8.1
 python-xlib==0.33
 regex==2024.11.6
 requests==2.32.3
+<<<<<<< HEAD
 rich==14.0.0
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+scipy==1.15.3
+setuptools==78.1.1
+six==1.17.0
+sounddevice==0.4.6
+=======
+=======
+rich==14.0.0
+>>>>>>> b9e1857 (actualizacion)
+>>>>>>> develop
 scipy @ file:///croot/scipy_1747238027288/work/dist/scipy-1.15.3-cp312-cp312-linux_x86_64.whl#sha256=d08f7dad705164c63152142357d3775e85fa292913cb9b9a8fe7ae5fa6537d6b
 setuptools==78.1.1
 shellingham==1.5.4
 six==1.17.0
 smart-open==7.1.0
 sounddevice @ file:///home/conda/feedstock_root/build_artifacts/python-sounddevice_1748804668549/work
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> eb0d622 (texto de requerimientos del proyecto y entorno virtual)
+=======
+>>>>>>> develop
 spacy==3.8.7
 spacy-legacy==3.0.12
 spacy-loggers==1.0.5
 srsly==2.5.1
+<<<<<<< HEAD
+=======
+>>>>>>> b9e1857 (actualizacion)
+>>>>>>> develop
 sympy==1.14.0
 thinc==8.3.6
 tiktoken==0.9.0
@@ -88,4 +162,15 @@ wasabi==1.1.3
 weasel==0.4.1
 wheel==0.45.1
 whisper==1.1.10
+<<<<<<< HEAD
 wrapt==1.17.2
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
+>>>>>>> eb0d622 (texto de requerimientos del proyecto y entorno virtual)
+=======
+wrapt==1.17.2
+>>>>>>> b9e1857 (actualizacion)
+>>>>>>> develop

@@ -40,6 +40,6 @@ Este proyecto consiste en el desarrollo de un **Sistema de Gestión Hospitalaria
 
 ## Authors
 
-- [Marcelo](https://github.com/Fabricio2103)
+- [Marcelo](https://github.com/Marcelo767n)
 - [Fabricio](https://github.com/Fabricio2103)
 - [Mirko](https://github.com/Fabricio2103)
