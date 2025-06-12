@@ -4,80 +4,106 @@ from datetime import datetime
 from .transcripcion_audio import transcribir_audio
 
 nlp = spacy.load("es_core_news_md")
+
 def extraer_personas(texto):
     doc = nlp(texto)
-    for ent in doc.ents:
-        if ent.label_ == "PER":
-            return ent.text
-    return None
-
+    personas = [ent.text for ent in doc.ents if ent.label_ == "PER"]
+    return personas
 
 def extraer_numeros(texto):
     doc = nlp(texto)
-    numeros = []
-    for token in doc:
-        if token.like_num and len(token.text) > 0:
-            numeros.append(token.text)
-    return numeros
-
+    return [token.text for token in doc if token.like_num]
 
 def extraer_fechas_horas(texto):
-    patron_fecha = re.search(r"\d{1,2} de \w+ de \d{4}", texto)
-    patron_hora = re.search(r"\d{1,2}:\d{2} (AM|PM)", texto, re.IGNORECASE)
-    fecha = patron_fecha.group() if patron_fecha else None
-    hora = patron_hora.group() if patron_hora else None
-    return fecha, hora
+    fecha = None
+    hora = None
 
+    # Extraer fecha en formato "12 de junio de 2025"
+    match_fecha = re.search(r"\d{1,2} de \w+ de \d{4}", texto, re.IGNORECASE)
+    if match_fecha:
+        fecha = match_fecha.group()
+
+    # Extraer hora como "14:30 PM" o "14:30"
+    match_hora = re.search(r"\d{1,2}:\d{2}(?:\s?(AM|PM))?", texto, re.IGNORECASE)
+    if match_hora:
+        hora = match_hora.group()
+
+    return fecha, hora
 
 def inferir_genero(texto):
     texto = texto.lower()
-    if "la paciente" in texto or "doctora" in texto or "señora" in texto or "doña" in texto:
+    if any(p in texto for p in ["la paciente", "doctora", "señora", "doña", "femenino"]):
         return "Femenino"
-    elif "el paciente" in texto or "doctor" in texto or "señor" in texto or "don" in texto:
+    elif any(p in texto for p in ["el paciente", "doctor", "señor", "don", "masculino"]):
         return "Masculino"
-    else:
-        return "No especificado"
-
+    return "No especificado"
 
 def procesar_registro(texto):
-    persona = extraer_personas(texto)
+    personas = extraer_personas(texto)
     numeros = extraer_numeros(texto)
-    edad = numeros[0] if len(numeros) > 0 else None
+    nombre = personas[0] if personas else ""
+    edad = numeros[0] if numeros else ""
     genero = inferir_genero(texto)
+
     return {
-        "nombre": persona,
+        "nombre": nombre,
         "edad": edad,
-        "genero": genero,
+        "genero": genero
     }
 
+def procesar_cita(texto):
+    """
+    Procesa el texto de voz y extrae los datos de cita:
+    paciente, medico, fecha y hora.
+    Ejemplo de entrada: "agendar cita para maria con el doctor lopez el lunes a las 10"
+    """
+    texto = texto.lower()
+
+    paciente = ""
+    medico = ""
+    fecha = ""
+    hora = ""
+
+    # Extraer paciente (después de "para")
+    match_paciente = re.search(r'para (\w+)', texto)
+    if match_paciente:
+        paciente = match_paciente.group(1)
+
+    # Extraer médico (después de "con el doctor" o "con la doctora")
+    match_medico = re.search(r'con (?:el|la)? ?doctor(?:a)? (\w+)', texto)
+    if match_medico:
+        medico = match_medico.group(1)
+
+    # Extraer fecha (puede ser una palabra como "lunes")
+    dias = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo']
+    for dia in dias:
+        if dia in texto:
+            fecha = dia
+            break
+
+    # Extraer hora (número después de "a las")
+    match_hora = re.search(r'a las (\d+)', texto)
+    if match_hora:
+        hora = match_hora.group(1) + ":00"
+
+    return {
+        "paciente": paciente,
+        "medico": medico,
+        "fecha": fecha,
+        "hora": hora
+    }
 
 def procesar_habitacion(texto):
     persona = extraer_personas(texto)
     numeros = extraer_numeros(texto)
-    habitacion = numeros[1] if len(numeros) > 1 else None  # evita confundir con edad
-    estado = "Ocupada"
+    habitacion = None
+
+    # Detectar el número que probablemente sea la habitación (último número mencionado)
+    if numeros:
+        habitacion = numeros[-1]
+
     return {
         "habitacion": habitacion,
         "paciente": persona,
-        "estado": estado
-    }
-
-
-def procesar_cita(texto):
-    fecha, hora = extraer_fechas_horas(texto)
-    doc = nlp(texto)
-    personas = [ent.text for ent in doc.ents if ent.label_ == "PER"]
-    medico = None
-    paciente = None
-    for p in personas:
-        p_lower = p.lower()
-        if 'dr.' in p_lower or 'dra.' in p_lower or "doctora" in texto.lower() or "doctor" in texto.lower():
-            medico = p
-        else:
-            paciente = p
-    return {
-        "fecha": fecha,
-        "hora": hora,
-        "paciente": paciente,
-        "medico": medico
+        "estado": "Ocupada"
     }
