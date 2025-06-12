@@ -5,6 +5,11 @@ ENCABEZADOS = ["Número", "Paciente Asignado", "Estado"]
 
 crear_archivo_si_no_existe(ARCHIVO, ENCABEZADOS)
 
-def asignar_habitacion(numero, paciente, estado="Ocupada"):
-    datos = [numero, paciente, estado]
-    guardar_en_excel(datos, ARCHIVO)
+def asignar_habitacion(datos):
+    """Asigna habitación usando diccionario"""
+    datos_lista = [
+        datos["numero"],
+        datos["paciente"],
+        datos.get("estado", "Ocupada")  # Valor por defecto
+    ]
+    guardar_en_excel(datos_lista, ARCHIVO)
