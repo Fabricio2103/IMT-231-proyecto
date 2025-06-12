@@ -16,7 +16,7 @@ root.configure(bg='#f8f8f8')
 root.resizable(False, False)
 
 # --- Variables globales ---
-pacientes = ["Juan Pérez", "María Gómez", "Carlos López"]  # Ejemplo, reemplaza con datos reales
+pacientes = ["Fabricio", "Marcelo", "Mirko"]  # Ejemplo, reemplaza con datos reales
 
 # --- Carga de imágenes ---
 def cargar_imagen(ruta_imagen, tamaño=None):
