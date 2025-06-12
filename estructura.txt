@@ -1,0 +1,46 @@
+.
+├── citas.xlsx
+├── estructura.txt
+├── funciones
+├── habitaciones.xlsx
+├── imagenes
+│   ├── fondo_citas.png
+│   ├── fondo_habitaciones.png
+│   ├── fondo_principal.png
+│   └── fondo_registro.png
+├── main.py
+├── modulos
+│   ├── backend
+│   │   ├── citas.py
+│   │   ├── habitaciones.py
+│   │   ├── __init__.py
+│   │   ├── pacientes.py
+│   │   └── __pycache__
+│   │       ├── citas.cpython-312.pyc
+│   │       ├── habitaciones.cpython-312.pyc
+│   │       ├── __init__.cpython-312.pyc
+│   │       └── pacientes.cpython-312.pyc
+│   └── utils
+│       ├── excel.py
+│       ├── __init__.py
+│       └── __pycache__
+│           ├── excel.cpython-312.pyc
+│           └── __init__.cpython-312.pyc
+├── pacientes.xlsx
+├── proyecto.yml
+├── README.md
+├── reconocimiento_de_voz
+│   ├── __init__.py
+│   ├── procesamiento_de_texto.py
+│   ├── pruebaMicrofono.py
+│   ├── __pycache__
+│   │   ├── grabacion.cpython-312.pyc
+│   │   ├── __init__.cpython-312.pyc
+│   │   ├── procesamiento_de_texto.cpython-312.pyc
+│   │   └── transcripcion_audio.cpython-312.pyc
+│   └── transcripcion_audio.py
+├── requirements.txt
+├── temp_1749701157.wav
+└── temp_1749704965.wav
+
+10 directories, 34 files

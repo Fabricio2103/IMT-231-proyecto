@@ -42,4 +42,4 @@ Este proyecto consiste en el desarrollo de un **Sistema de Gestión Hospitalaria
 
 - [Marcelo](https://github.com/Marcelo767n)
 - [Fabricio](https://github.com/Fabricio2103)
-- [Mirko](https://github.com/Fabricio2103)
+- [Mirko](https://github.com/MirkoCapo)
