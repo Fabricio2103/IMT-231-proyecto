@@ -72,9 +72,9 @@ def configurar_ventana_registro(marco):
         ttk.Label(marco, text=texto).grid(row=i, column=0, padx=5, pady=5, sticky='e')
         widget.grid(row=i, column=1, padx=5, pady=5, sticky='w')
     
-    ttk.Button(marco, text="🎤 Usar Voz", 
+    ttk.Button(marco, text=" Usar Voz", 
               command=lambda: procesar_comando_voz("registro", campos)).grid(row=4, column=0, pady=10)
-    ttk.Button(marco, text="💾 Guardar", 
+    ttk.Button(marco, text=" Guardar", 
               command=lambda: guardar_paciente({
                   'nombre': campos[0][1].get(),
                   'edad': campos[1][1].get(),
@@ -96,9 +96,9 @@ def configurar_ventana_citas(marco):
         ttk.Label(marco, text=texto).grid(row=i, column=0, padx=5, pady=5, sticky='e')
         widget.grid(row=i, column=1, padx=5, pady=5, sticky='w')
     
-    ttk.Button(marco, text="🎤 Usar Voz", 
+    ttk.Button(marco, text=" Usar Voz", 
               command=lambda: procesar_comando_voz("citas", campos)).grid(row=5, column=0, pady=10)
-    ttk.Button(marco, text="📅 Programar", 
+    ttk.Button(marco, text=" Programar", 
               command=lambda: programar_cita({
                   'paciente': campos[0][1].get(),
                   'medico': campos[1][1].get(),
@@ -119,9 +119,9 @@ def configurar_ventana_habitaciones(marco):
         ttk.Label(marco, text=texto).grid(row=i, column=0, padx=5, pady=5, sticky='e')
         widget.grid(row=i, column=1, padx=5, pady=5, sticky='w')
     
-    ttk.Button(marco, text="🎤 Usar Voz", 
+    ttk.Button(marco, text=" Usar Voz", 
               command=lambda: procesar_comando_voz("habitaciones", campos)).grid(row=3, column=0, pady=10)
-    ttk.Button(marco, text="🛏️ Asignar", 
+    ttk.Button(marco, text=" Asignar", 
               command=lambda: asignar_habitacion({
                   'paciente': campos[0][1].get(),
                   'habitacion': campos[1][1].get()

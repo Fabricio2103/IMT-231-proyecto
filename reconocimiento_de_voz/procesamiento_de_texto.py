@@ -44,12 +44,10 @@ def procesar_registro(texto):
     numeros = extraer_numeros(texto)
     edad = numeros[0] if len(numeros) > 0 else None
     genero = inferir_genero(texto)
-    historial = ""
     return {
         "nombre": persona,
         "edad": edad,
         "genero": genero,
-        "historial": historial
     }
 
 

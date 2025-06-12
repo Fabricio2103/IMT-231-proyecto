@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 import time
 
-def transcribir_audio(duracion=10):
+def transcribir_audio(duracion=20):
     """Grabacion y transcripción en un solo paso"""
     # Cargar modelo una vez
     model = whisper.load_model("small")
