@@ -17,16 +17,10 @@ def cargar_imagen(ruta, size=None):
         messagebox.showwarning("Advertencia", f"No se pudo cargar la imagen: {str(e)}")
         return None
 
-def convertir_valor(valor):
-    if isinstance(valor, list):
-        return ", ".join(map(str, valor))
-    elif valor is None:
-        return ""
-    return str(valor)
-
-def procesar_comando_voz(accion, campos):
+def procesar_comando_voz(accion, campos, frame):
     def tarea():
         try:
+            grabando_label.config(text="🎙️ Grabando...")
             texto = transcribir_audio(5)
 
             if accion == "registro":
@@ -39,16 +33,22 @@ def procesar_comando_voz(accion, campos):
                 datos = {}
 
             for clave, (etiqueta, widget) in campos.items():
-                valor = convertir_valor(datos.get(clave, ""))
+                valor = datos.get(clave, "")
                 if isinstance(widget, ttk.Combobox):
                     widget.set(valor)
                 else:
                     widget.delete(0, tk.END)
                     widget.insert(0, valor)
 
-            messagebox.showinfo("Éxito", "Comando de voz procesado")
+            grabando_label.config(text=" Comando procesado correctamente.")
+            frame.after(3000, lambda: grabando_label.config(text=""))
+
         except Exception as e:
-            messagebox.showerror("Error", f"Error al procesar voz: {str(e)}")
+            grabando_label.config(text=f" Error: {str(e)}")
+            frame.after(4000, lambda: grabando_label.config(text=""))
+
+    grabando_label = ttk.Label(frame, text="", font=('Arial', 10, 'italic'), foreground='blue')
+    grabando_label.grid(row=99, column=0, columnspan=2, pady=5)
     threading.Thread(target=tarea, daemon=True).start()
 
 def crear_ventana(titulo, fondo_img_path, construir_funcion):
@@ -57,7 +57,8 @@ def crear_ventana(titulo, fondo_img_path, construir_funcion):
     ventana.geometry("800x600")
     ventana.resizable(False, False)
 
-    fondo = cargar_imagen(fondo_img_path, (800, 600))
+    ruta_fondo = os.path.join("imagenes", fondo_img_path)
+    fondo = cargar_imagen(ruta_fondo, (800, 600))
     if fondo:
         fondo_label = tk.Label(ventana, image=fondo)
         fondo_label.image = fondo
@@ -71,7 +72,7 @@ def crear_ventana(titulo, fondo_img_path, construir_funcion):
 def construir_registro(frame, ventana):
     campos = {}
     ttk.Label(frame, text="Registro de Pacientes", font=('Arial', 14, 'bold')).grid(row=0, column=0, columnspan=2, pady=10)
-    ttk.Label(frame, text="Ejemplo: 'Registrar paciente Juan Perez, 45 años, masculino'").grid(row=1, column=0, columnspan=2)
+    ttk.Label(frame, text="Ejemplo: registrar paciente Juan Pérez, 34 años, masculino", font=('Arial', 9, 'italic')).grid(row=1, column=0, columnspan=2)
 
     etiquetas = ["nombre", "edad", "genero"]
     textos = ["Nombre:", "Edad:", "Género:"]
@@ -87,14 +88,14 @@ def construir_registro(frame, ventana):
         for _, widget in campos.values():
             widget.delete(0, tk.END) if isinstance(widget, tk.Entry) else widget.set("")
 
-    ttk.Button(frame, text="🎤 Voz", command=lambda: procesar_comando_voz("registro", campos)).grid(row=5, column=0, pady=10)
-    ttk.Button(frame, text="📅 Guardar", command=guardar_y_limpiar).grid(row=5, column=1, pady=10)
-    ttk.Button(frame, text="🔙 Volver", command=ventana.destroy).grid(row=6, column=0, columnspan=2, pady=10)
+    ttk.Button(frame, text=" Voz", command=lambda: procesar_comando_voz("registro", campos, frame)).grid(row=5, column=0, pady=10)
+    ttk.Button(frame, text=" Guardar", command=guardar_y_limpiar).grid(row=5, column=1, pady=10)
+    ttk.Button(frame, text=" Volver", command=ventana.destroy).grid(row=6, column=0, columnspan=2, pady=10)
 
 def construir_citas(frame, ventana):
     campos = {}
     ttk.Label(frame, text="Programación de Citas", font=('Arial', 14, 'bold')).grid(row=0, column=0, columnspan=2, pady=10)
-    ttk.Label(frame, text="Ejemplo: 'Agendar cita para Maria con el doctor Lopez el lunes a las 10'").grid(row=1, column=0, columnspan=2)
+    ttk.Label(frame, text="Ejemplo: agendar cita para María con el doctor López el lunes a las 10", font=('Arial', 9, 'italic')).grid(row=1, column=0, columnspan=2)
 
     etiquetas = ["paciente", "medico", "fecha", "hora"]
     textos = ["Paciente:", "Médico:", "Fecha:", "Hora:"]
@@ -110,14 +111,14 @@ def construir_citas(frame, ventana):
         for _, widget in campos.values():
             widget.delete(0, tk.END)
 
-    ttk.Button(frame, text="🎤 Voz", command=lambda: procesar_comando_voz("citas", campos)).grid(row=6, column=0, pady=10)
-    ttk.Button(frame, text="🗓 Programar", command=programar_y_limpiar).grid(row=6, column=1, pady=10)
-    ttk.Button(frame, text="🔙 Volver", command=ventana.destroy).grid(row=7, column=0, columnspan=2, pady=10)
+    ttk.Button(frame, text=" Voz", command=lambda: procesar_comando_voz("citas", campos, frame)).grid(row=6, column=0, pady=10)
+    ttk.Button(frame, text=" Programar", command=programar_y_limpiar).grid(row=6, column=1, pady=10)
+    ttk.Button(frame, text=" Volver", command=ventana.destroy).grid(row=7, column=0, columnspan=2, pady=10)
 
 def construir_habitaciones(frame, ventana):
     campos = {}
     ttk.Label(frame, text="Asignación de Habitaciones", font=('Arial', 14, 'bold')).grid(row=0, column=0, columnspan=2, pady=10)
-    ttk.Label(frame, text="Ejemplo: 'Asignar habitación 205 al paciente Carlos Ruiz'").grid(row=1, column=0, columnspan=2)
+    ttk.Label(frame, text="Ejemplo: asignar habitación 204 a Carlos", font=('Arial', 9, 'italic')).grid(row=1, column=0, columnspan=2)
 
     etiquetas = ["paciente", "habitacion"]
     textos = ["Paciente:", "Habitación:"]
@@ -133,16 +134,17 @@ def construir_habitaciones(frame, ventana):
         for _, widget in campos.values():
             widget.delete(0, tk.END)
 
-    ttk.Button(frame, text="🎤 Voz", command=lambda: procesar_comando_voz("habitaciones", campos)).grid(row=4, column=0, pady=10)
-    ttk.Button(frame, text="🛌 Asignar", command=asignar_y_limpiar).grid(row=4, column=1, pady=10)
-    ttk.Button(frame, text="🔙 Volver", command=ventana.destroy).grid(row=5, column=0, columnspan=2, pady=10)
+    ttk.Button(frame, text=" Voz", command=lambda: procesar_comando_voz("habitaciones", campos, frame)).grid(row=4, column=0, pady=10)
+    ttk.Button(frame, text=" Asignar", command=asignar_y_limpiar).grid(row=4, column=1, pady=10)
+    ttk.Button(frame, text=" Volver", command=ventana.destroy).grid(row=5, column=0, columnspan=2, pady=10)
 
 root = tk.Tk()
 root.title("Sistema Hospitalario Inteligente")
 root.geometry("1200x800")
 root.resizable(False, False)
 
-fondo_principal = cargar_imagen("fondo_principal.png", (1200, 800))
+ruta_fondo_principal = os.path.join("imagenes", "fondo_principal.png")
+fondo_principal = cargar_imagen(ruta_fondo_principal, (1200, 800))
 if fondo_principal:
     fondo_label = tk.Label(root, image=fondo_principal)
     fondo_label.place(x=0, y=0, relwidth=1, relheight=1)
@@ -168,4 +170,3 @@ for texto, comando in botones:
     ttk.Button(frame_main, text=texto, command=comando, width=30).pack(pady=10)
 
 root.mainloop()
-    
