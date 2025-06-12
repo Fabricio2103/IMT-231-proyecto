@@ -20,7 +20,7 @@ def cargar_imagen(ruta, size=None):
 def procesar_comando_voz(accion, campos, frame):
     def tarea():
         try:
-            grabando_label.config(text="🎙️ Grabando...")
+            grabando_label.config(text="Grabando...")
             texto = transcribir_audio(5)
 
             if accion == "registro":
@@ -168,5 +168,36 @@ botones = [
 
 for texto, comando in botones:
     ttk.Button(frame_main, text=texto, command=comando, width=30).pack(pady=10)
+
+# ➕ Botón adicional para comando por voz
+ttk.Button(frame_main, text="🎤 Comando por Voz", command=lambda: comando_por_voz_desde_principal(frame_main), width=30).pack(pady=20)
+
+def comando_por_voz_desde_principal(frame):
+    def tarea():
+        try:
+            mensaje_label.config(text="🎙️ Escuchando comando...")
+            texto = transcribir_audio(5).lower()
+
+            if any(p in texto for p in ["registrar", "registro", "paciente"]):
+                crear_ventana("Registro de Pacientes", "fondo_registro.png", construir_registro)
+            elif any(p in texto for p in ["cita", "doctor", "médico"]):
+                crear_ventana("Programar Cita", "fondo_citas.png", construir_citas)
+            elif any(p in texto for p in ["habitación", "asignar"]):
+                crear_ventana("Asignar Habitación", "fondo_habitaciones.png", construir_habitaciones)
+            else:
+                mensaje_label.config(text="❌ No se reconoció la acción. Intenta de nuevo.")
+                frame.after(4000, lambda: mensaje_label.config(text=""))
+                return
+
+            mensaje_label.config(text="✅ Comando procesado correctamente.")
+            frame.after(3000, lambda: mensaje_label.config(text=""))
+
+        except Exception as e:
+            mensaje_label.config(text=f"❌ Error: {str(e)}")
+            frame.after(4000, lambda: mensaje_label.config(text=""))
+
+    mensaje_label = ttk.Label(frame, text="", font=('Arial', 10, 'italic'), foreground='blue')
+    mensaje_label.pack()
+    threading.Thread(target=tarea, daemon=True).start()
 
 root.mainloop()
